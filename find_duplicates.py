@@ -2,6 +2,11 @@ import argparse
 import os
 import hashlib
 
+#
+# A utility script that looks in a given directory for files with duplicate sizes and md5 sums of their contents.
+# Any duplicate files are recorded as 'rm' commands in a output script: {srcdir}/delete_duplicates.sh
+# After this program completes, run delete_duplicates.sh to delete the duplicate files.
+#
 def md5sum(filename, blocksize=65536):
     hash = hashlib.md5()
     with open(filename, "rb") as f:

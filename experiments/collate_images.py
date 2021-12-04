@@ -62,7 +62,7 @@ def add_mv_entry(file_info):
         logging.error(f"Error getting EXIF from {file_info['src_path']}")
 
 
-with open(os.path.join(args.srcdir, '/Users/swhite/copy_photos.sh'), 'w') as dups_file:
+with open(os.path.join(args.srcdir, 'copy_photos.sh'), 'w') as dups_file:
     for subdir, d_names, f_names in os.walk(args.srcdir):
         for f in f_names:
             if not str(f).lower().endswith(".jpg"):

@@ -4,6 +4,13 @@ import os
 from exif import Image
 from datetime import datetime
 
+#
+# A utility script that looks in a given directory for images in a yyyy/mm/dd directory hierarchy.
+# The EXIF data for each image is examined for the
+# Any duplicate files are recorded as 'rm' commands in a output script: {srcdir}/delete_duplicates.sh
+# After this program completes, run move_misplaced_photos.sh to move the misplaced images
+# to the correct location in the photo-library.
+#
 image_library_path = os.environ.get('HOME') + '/Pictures/photo-library'
 
 parser = argparse.ArgumentParser(description='Find duplicate photos')
@@ -30,7 +37,7 @@ def get_exif_dst_path(filename, dir):
         print(f"{src_path} is correct")
 
 
-with open(os.path.join(args.srcdir, '/Users/swhite/move_misplaced_photos.sh'), 'w') as dups_file:
+with open(os.path.join(args.srcdir, 'move_misplaced_photos.sh'), 'w') as dups_file:
     for subdir, d_names, f_names in os.walk(args.srcdir):
         for f in f_names:
             if not str(f).lower().endswith(".jpg"):

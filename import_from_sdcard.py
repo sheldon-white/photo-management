@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
 
+#
+# This is intended to be triggered when an sdcard is inserted into a Mac. It looks for a Volume with a DCIM directory
+# and imports new files into a photo library hierarchy.
+# I used AppleScript to trigger this when any new filesystem is mounted.
+#
+
 import datetime
 import os
 import shutil
 from os.path import exists
 
+# Path to photo library.
 image_library_path = os.environ.get('HOME') + '/Pictures/photo-library'
 
-
+# Look for a Volume that looks like a mounted camera sdcard.
 def find_sdcard_root():
     for file in os.listdir('/Volumes'):
         path = f'/Volumes/{file}/DCIM'
@@ -69,11 +76,12 @@ def copy_file(file_info):
                 os.makedirs(file_info['dst_dir'], exist_ok=True)
                 shutil.copy2(file_info['src_path'], copy_filename)
 
+
 def process_file(filename, directory):
     file_info = get_file_info(filename, directory)
     copy_file(file_info)
 
-
+# Start of the actual script.
 sdcard_root = find_sdcard_root()
 if sdcard_root is None:
     print('no sdcard found')
